@@ -5,10 +5,14 @@ public class Player : MonoBehaviour {
     private Rigidbody rb;
     private Animator animator;
 
+    private Interactable highlighted = null;
+
     [Header("Input Actions")]
     public InputActionReference moveAction; // expects Vector2
+    public InputActionReference interactAction;
     public float moveSpeed = 2f;
     public float fallSpeed = 2f;
+    public float interactRadius = .75f;
     
     [Header("Animation")]
     [SerializeField] private InputActionReference sprintAction; // optional, Button
@@ -18,6 +22,8 @@ public class Player : MonoBehaviour {
     private void Awake() {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+
+        interactAction.action.started += context => Interact();
     }
     
     /// <summary>
@@ -32,6 +38,37 @@ public class Player : MonoBehaviour {
     /// </summary>
     public bool IsSprintEnabled() {
         return sprintEnabled;
+    }
+
+    private void Update() {
+        Collider[] overlapping = Physics.OverlapSphere(transform.position, interactRadius, LayerMask.GetMask("Interactable"));
+        Interactable nearest = null;
+        float nearestSqDist = float.PositiveInfinity;
+        foreach(Collider c in overlapping) {
+            Interactable interactable = c.GetComponent<Interactable>();
+            if (interactable == null) continue;
+
+            float sqDist = (transform.position - c.transform.position).sqrMagnitude;
+            if (sqDist < nearestSqDist) {
+                nearest = interactable;
+                nearestSqDist = sqDist;
+            }
+        }
+        if (nearest != highlighted) {
+            if (highlighted != null) {
+                highlighted.SetHighlight(false);
+            }
+            if (nearest != null) {
+                nearest.SetHighlight(true);
+            }
+            highlighted = nearest;
+        }
+    }
+
+    private void Interact() {
+        if (highlighted != null) {
+            highlighted.Interact(this);
+        }
     }
 
     private void FixedUpdate() {
