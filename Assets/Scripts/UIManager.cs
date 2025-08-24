@@ -1,0 +1,343 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using System;
+
+public class UIManager : MonoBehaviour
+{
+    [Header("Game Manager Reference")]
+    [SerializeField] private GameManager gameManager;
+    
+    [Header("Main HUD")]
+    [SerializeField] private GameObject hudPanel;
+    [SerializeField] private TextMeshProUGUI storeScoreText;
+    [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private Slider storeScoreSlider;
+    
+    [Header("Task UI")]
+    [SerializeField] private GameObject taskListPanel;
+    [SerializeField] private Transform taskListContainer;
+    [SerializeField] private GameObject taskItemPrefab;
+    [SerializeField] private TextMeshProUGUI activeTaskCountText;
+    
+    [Header("Game State Panels")]
+    [SerializeField] private GameObject mainMenuPanel;
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject levelCompletePanel;
+    [SerializeField] private GameObject pausePanel;
+    
+    [Header("Main Menu")]
+    [SerializeField] private Button startGameButton;
+    [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] private TextMeshProUGUI instructionsText;
+    
+    [Header("Game Over")]
+    [SerializeField] private TextMeshProUGUI gameOverTitleText;
+    [SerializeField] private TextMeshProUGUI finalScoreText;
+    [SerializeField] private TextMeshProUGUI finalLevelText;
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Button mainMenuButton;
+    
+    [Header("Level Complete")]
+    [SerializeField] private TextMeshProUGUI levelCompleteText;
+    [SerializeField] private TextMeshProUGUI levelScoreText;
+    [SerializeField] private TextMeshProUGUI nextLevelText;
+    
+    [Header("Pause Menu")]
+    [SerializeField] private Button resumeButton;
+    [SerializeField] private Button pauseRestartButton;
+    [SerializeField] private Button pauseMainMenuButton;
+    
+    [Header("Player Interaction")]
+    [SerializeField] private GameObject interactionPrompt;
+    [SerializeField] private TextMeshProUGUI interactionText;
+    
+    [Header("Settings")]
+    [SerializeField] private Color urgentTaskColor = Color.red;
+    [SerializeField] private Color normalTaskColor = Color.white;
+    [SerializeField] private Color completedTaskColor = Color.green;
+    
+    [SerializeField] private TaskManager taskManager;
+    
+    private void Awake()
+    {
+        SetupButtons();
+    }
+    
+    private void Start()
+    {
+        // Subscribe to GameManager events
+        if (gameManager != null)
+        {
+            gameManager.OnStoreScoreChanged += UpdateStoreScore;
+            gameManager.OnTimeChanged += UpdateTimer;
+            gameManager.OnGameStateChanged += UpdateGameState;
+            gameManager.OnLevelComplete += ShowLevelComplete;
+            gameManager.OnGameOver += ShowGameOver;
+        }
+        
+        // Initialize UI
+        UpdateGameState(gameManager != null ? gameManager.CurrentState : GameManager.GameState.MainMenu);
+        UpdateStoreScore(gameManager != null ? gameManager.StoreScore : 100);
+    }
+    
+    private void OnDestroy()
+    {
+        // Unsubscribe from events
+        if (gameManager != null)
+        {
+            gameManager.OnStoreScoreChanged -= UpdateStoreScore;
+            gameManager.OnTimeChanged -= UpdateTimer;
+            gameManager.OnGameStateChanged -= UpdateGameState;
+            gameManager.OnLevelComplete -= ShowLevelComplete;
+            gameManager.OnGameOver -= ShowGameOver;
+        }
+    }
+    
+    private void Update()
+    {
+        // Update task list periodically
+        if (gameManager != null && gameManager.IsPlaying)
+        {
+            UpdateTaskList();
+        }
+        
+        // Handle pause input
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (gameManager != null)
+            {
+                if (gameManager.CurrentState == GameManager.GameState.Playing)
+                {
+                    gameManager.PauseGame();
+                }
+                else if (gameManager.CurrentState == GameManager.GameState.Paused)
+                {
+                    gameManager.ResumeGame();
+                }
+            }
+        }
+    }
+    
+    private void SetupButtons()
+    {
+        if (startGameButton != null)
+            startGameButton.onClick.AddListener(() => gameManager?.StartGame());
+        
+        if (restartButton != null)
+            restartButton.onClick.AddListener(() => gameManager?.RestartGame());
+        
+        if (mainMenuButton != null)
+            mainMenuButton.onClick.AddListener(() => ReturnToMainMenu());
+        
+        if (resumeButton != null)
+            resumeButton.onClick.AddListener(() => gameManager?.ResumeGame());
+        
+        if (pauseRestartButton != null)
+            pauseRestartButton.onClick.AddListener(() => gameManager?.RestartGame());
+        
+        if (pauseMainMenuButton != null)
+            pauseMainMenuButton.onClick.AddListener(() => ReturnToMainMenu());
+    }
+    
+    private void UpdateStoreScore(int score)
+    {
+        if (storeScoreText != null)
+            storeScoreText.text = $"Store Rating: {score}";
+        
+        if (storeScoreSlider != null)
+        {
+            storeScoreSlider.value = score / 100f; // Assuming max score is 100
+            
+            // Change color based on score
+            Image fillImage = storeScoreSlider.fillRect?.GetComponent<Image>();
+            if (fillImage != null)
+            {
+                if (score > 60)
+                    fillImage.color = Color.green;
+                else if (score > 30)
+                    fillImage.color = Color.yellow;
+                else
+                    fillImage.color = Color.red;
+            }
+        }
+    }
+    
+    private void UpdateTimer(float timeRemaining)
+    {
+        if (timerText != null)
+        {
+            int minutes = Mathf.FloorToInt(timeRemaining / 60);
+            int seconds = Mathf.FloorToInt(timeRemaining % 60);
+            timerText.text = $"Time: {minutes:00}:{seconds:00}";
+            
+            // Change color when time is running out
+            if (timeRemaining < 30f)
+                timerText.color = Color.red;
+            else if (timeRemaining < 60f)
+                timerText.color = Color.yellow;
+            else
+                timerText.color = Color.white;
+        }
+    }
+    
+    private void UpdateGameState(GameManager.GameState newState)
+    {
+        // Hide all panels first
+        SetPanelActive(mainMenuPanel, false);
+        SetPanelActive(hudPanel, false);
+        SetPanelActive(gameOverPanel, false);
+        SetPanelActive(levelCompletePanel, false);
+        SetPanelActive(pausePanel, false);
+        SetPanelActive(taskListPanel, false);
+        SetPanelActive(interactionPrompt, false);
+        
+        // Show appropriate panels based on state
+        switch (newState)
+        {
+            case GameManager.GameState.MainMenu:
+                SetPanelActive(mainMenuPanel, true);
+                if (titleText != null)
+                    titleText.text = "Store Bot Manager";
+                if (instructionsText != null)
+                    instructionsText.text = "Help the robot manage the store!\nComplete tasks to maintain your store rating.";
+                break;
+                
+            case GameManager.GameState.Playing:
+                SetPanelActive(hudPanel, true);
+                SetPanelActive(taskListPanel, true);
+                if (levelText != null && gameManager != null)
+                    levelText.text = $"Level: {gameManager.CurrentLevel}";
+                break;
+                
+            case GameManager.GameState.Paused:
+                SetPanelActive(hudPanel, true);
+                SetPanelActive(pausePanel, true);
+                break;
+                
+            case GameManager.GameState.LevelComplete:
+                SetPanelActive(hudPanel, true);
+                SetPanelActive(levelCompletePanel, true);
+                break;
+                
+            case GameManager.GameState.GameOver:
+                SetPanelActive(gameOverPanel, true);
+                break;
+        }
+    }
+    
+    private void ShowLevelComplete(int level)
+    {
+        if (levelCompleteText != null)
+            levelCompleteText.text = $"Level {level} Complete!";
+        
+        if (levelScoreText != null && gameManager != null)
+            levelScoreText.text = $"Store Rating: {gameManager.StoreScore}";
+        
+        if (nextLevelText != null)
+            nextLevelText.text = $"Preparing Level {level + 1}...";
+    }
+    
+    private void ShowGameOver()
+    {
+        if (gameOverTitleText != null)
+            gameOverTitleText.text = "Store Closed!";
+        
+        if (finalScoreText != null && gameManager != null)
+            finalScoreText.text = $"Final Rating: {gameManager.StoreScore}";
+        
+        if (finalLevelText != null && gameManager != null)
+            finalLevelText.text = $"Reached Level: {gameManager.CurrentLevel}";
+    }
+    
+    private void UpdateTaskList()
+    {
+        if (taskManager == null || taskListContainer == null) return;
+        
+        // Update task count
+        if (activeTaskCountText != null)
+            activeTaskCountText.text = $"Active Tasks: {taskManager.ActiveTaskCount}";
+        
+        // Clear existing task items
+        foreach (Transform child in taskListContainer)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        // Create task items for active tasks
+        var activeTasks = taskManager.ActiveTasks;
+        foreach (var task in activeTasks)
+        {
+            if (task != null)
+                CreateTaskItem(task);
+        }
+    }
+    
+    private void CreateTaskItem(StoreTask task)
+    {
+        if (taskItemPrefab == null) return;
+        
+        GameObject taskItem = Instantiate(taskItemPrefab, taskListContainer);
+        
+        // Find components in the task item
+        TextMeshProUGUI taskNameText = taskItem.GetComponentInChildren<TextMeshProUGUI>();
+        Slider taskProgressSlider = taskItem.GetComponentInChildren<Slider>();
+        Image background = taskItem.GetComponent<Image>();
+        
+        if (taskNameText != null)
+        {
+            taskNameText.text = task.TaskName;
+            
+            // Color based on urgency
+            float urgencyRatio = task.TimeRemaining / task.MaxDuration;
+            if (urgencyRatio < 0.25f)
+                taskNameText.color = urgentTaskColor;
+            else
+                taskNameText.color = normalTaskColor;
+        }
+        
+        if (taskProgressSlider != null)
+        {
+            taskProgressSlider.value = task.TimeRemaining / task.MaxDuration;
+        }
+        
+        if (background != null)
+        {
+            float urgencyRatio = task.TimeRemaining / task.MaxDuration;
+            if (urgencyRatio < 0.25f)
+                background.color = Color.Lerp(Color.red, Color.white, 0.8f);
+            else
+                background.color = Color.white;
+        }
+    }
+    
+    public void ShowInteractionPrompt(string text)
+    {
+        if (interactionPrompt != null && interactionText != null)
+        {
+            SetPanelActive(interactionPrompt, true);
+            interactionText.text = text;
+        }
+    }
+    
+    public void HideInteractionPrompt()
+    {
+        SetPanelActive(interactionPrompt, false);
+    }
+    
+    private void ReturnToMainMenu()
+    {
+        Time.timeScale = 1f; // Reset time scale
+        if (gameManager != null)
+        {
+            gameManager.RestartGame(); // This will reset to main menu state
+        }
+    }
+    
+    private void SetPanelActive(GameObject panel, bool active)
+    {
+        if (panel != null)
+            panel.SetActive(active);
+    }
+}
