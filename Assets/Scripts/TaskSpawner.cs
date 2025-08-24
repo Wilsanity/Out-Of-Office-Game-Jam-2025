@@ -13,6 +13,7 @@ public class TaskSpawner : MonoBehaviour
 
     private float totalChance = 0f;
     private float spawnTimer = 0f;
+    private int maxTasks = 1;
 
 
     void Start() {
@@ -50,9 +51,11 @@ public class TaskSpawner : MonoBehaviour
         }
         int randSpawnIndex = Random.Range(0, nAvailable);
         foreach (TaskSpawnPoint tsp in spawns) {
-            if (tsp.allowSpawn[taskIndex]) {
+            if (tsp.allowSpawn[taskIndex] && tsp.transform.childCount < maxTasks) {
                 if (randSpawnIndex <= 0) {
-                    GameObject.Instantiate(taskSlots[randSpawnIndex].taskPrefab, tsp.transform.position, tsp.transform.rotation);
+                    
+                    GameObject obj = GameObject.Instantiate(taskSlots[randSpawnIndex].taskPrefab, tsp.transform.position, tsp.transform.rotation);
+                    obj.transform.parent = tsp.transform;
                     break;
                 }
                 randSpawnIndex--;
