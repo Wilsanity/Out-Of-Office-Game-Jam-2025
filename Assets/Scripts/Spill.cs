@@ -3,7 +3,7 @@ using UnityEngine;
 public class Spill : AbstractTask, Interactable {
     public void Start() {
         // Place myself on a valid spawn point
-        TaskSpawnPoint tsp = FindRandomSpawnPoint(tsp => tsp.allowSpill = true);
+        TaskSpawnPoint tsp = TaskSpawnPoint.FindRandomSpawnPoint(tsp => tsp.allowSpill = true);
         if(tsp != null) {
             transform.SetParent(tsp.transform, false);
         } else {
