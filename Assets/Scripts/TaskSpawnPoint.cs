@@ -2,5 +2,6 @@ using UnityEngine;
 
 public class TaskSpawnPoint : MonoBehaviour
 {
-    public bool[] allowSpawn;
+    public bool allowSpill = true;
+    // Configuration options go here
 }

@@ -1,7 +1,17 @@
 using UnityEngine;
 
-public class Spill : MonoBehaviour, Interactable
-{
+public class Spill : AbstractTask, Interactable {
+    public void Start() {
+        // Place myself on a valid spawn point
+        TaskSpawnPoint tsp = FindRandomSpawnPoint(tsp => tsp.allowSpill = true);
+        if(tsp != null) {
+            transform.SetParent(tsp.transform, false);
+        } else {
+            Debug.LogWarning("No spawn points found!");
+            GameObject.Destroy(gameObject);
+        }
+    }
+
     public void SetHighlight(bool highlighted) {
         //TODO: implement highlight
     }

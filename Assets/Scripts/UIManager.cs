@@ -2,9 +2,12 @@
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
+    public InputActionReference pauseAction;
+
     [Header("Game Manager Reference")]
     [SerializeField] private GameManager gameManager;
     
@@ -80,6 +83,8 @@ public class UIManager : MonoBehaviour
         // Initialize UI
         UpdateGameState(gameManager != null ? gameManager.CurrentState : GameManager.GameState.MainMenu);
         UpdateStoreScore(gameManager != null ? gameManager.StoreScore : 100);
+
+        pauseAction.action.started += context => OnPausePressed();
     }
     
     private void OnDestroy()
@@ -102,24 +107,18 @@ public class UIManager : MonoBehaviour
         {
             UpdateTaskList();
         }
-        
-        // Handle pause input
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (gameManager != null)
-            {
-                if (gameManager.CurrentState == GameManager.GameState.Playing)
-                {
-                    gameManager.PauseGame();
-                }
-                else if (gameManager.CurrentState == GameManager.GameState.Paused)
-                {
-                    gameManager.ResumeGame();
-                }
+    }
+
+    private void OnPausePressed() {
+        if (gameManager != null) {
+            if (gameManager.CurrentState == GameManager.GameState.Playing) {
+                gameManager.PauseGame();
+            } else if (gameManager.CurrentState == GameManager.GameState.Paused) {
+                gameManager.ResumeGame();
             }
         }
     }
-    
+
     private void SetupButtons()
     {
         if (startGameButton != null)
