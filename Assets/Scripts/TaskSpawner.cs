@@ -11,15 +11,7 @@ public class TaskSpawner : MonoBehaviour
 {
     public TaskSlot[] taskSlots;
 
-    private float totalChance = 0f;
     private float spawnTimer = 0f;
-
-
-    void Start() {
-        foreach(TaskSlot ts in taskSlots) {
-            totalChance += ts.spawnChance;
-        }
-    }
 
     void Update() {
         spawnTimer -= Time.deltaTime;
@@ -28,34 +20,23 @@ public class TaskSpawner : MonoBehaviour
         }
     }
 
+    // Spawn a random task, weighted by spawnChance
     void SpawnWeightedRandom() {
+        float totalChance = 0f;
+        foreach (TaskSlot ts in taskSlots) {
+            totalChance += ts.spawnChance;
+        }
+
         float r = Random.value * totalChance;
+
         for (int i = 0; i < taskSlots.Length; i++) {
             r -= taskSlots[i].spawnChance;
             if (r <= 0) {
-                Spawn(i);
+                GameObject.Instantiate(taskSlots[i].taskPrefab);
+
+                // Wait for spawnDelay before spawning the next task
                 spawnTimer += taskSlots[i].spawnDelay;
                 break;
-            }
-        }
-    }
-
-    void Spawn(int taskIndex) {
-        TaskSpawnPoint[] spawns = GetComponentsInChildren<TaskSpawnPoint>();
-        int nAvailable = 0;
-        foreach (TaskSpawnPoint tsp in spawns) {
-            if (tsp.allowSpawn[taskIndex]) {
-                nAvailable ++;
-            }
-        }
-        int randSpawnIndex = Random.Range(0, nAvailable);
-        foreach (TaskSpawnPoint tsp in spawns) {
-            if (tsp.allowSpawn[taskIndex]) {
-                if (randSpawnIndex <= 0) {
-                    GameObject.Instantiate(taskSlots[randSpawnIndex].taskPrefab, tsp.transform.position, tsp.transform.rotation);
-                    break;
-                }
-                randSpawnIndex--;
             }
         }
     }
