@@ -6,6 +6,7 @@ public class Player : MonoBehaviour {
     private Animator animator;
 
     private Interactable highlighted = null;
+    private float stunDurationSeconds = 0f; // blocks all input
 
     [Header("Input Actions")]
     public InputActionReference moveAction; // expects Vector2
@@ -39,7 +40,12 @@ public class Player : MonoBehaviour {
         return sprintEnabled;
     }
 
+    public void Stun (float durationSeconds) {
+        stunDurationSeconds = Mathf.Max(stunDurationSeconds, durationSeconds);
+    }
+
     private void Update() {
+        // Highlight the nearest interactable in range
         Collider[] overlapping = Physics.OverlapSphere(transform.position, interactRadius, LayerMask.GetMask("Interactable"));
         Interactable nearest = null;
         float nearestSqDist = float.PositiveInfinity;
@@ -65,6 +71,9 @@ public class Player : MonoBehaviour {
     }
 
     private void Interact() {
+        if (stunDurationSeconds > 0) {
+            return;
+        }
         if (highlighted != null) {
             highlighted.Interact(this);
         }
@@ -80,6 +89,11 @@ public class Player : MonoBehaviour {
 
     private void FixedUpdate() {
         Vector2 input = moveAction.action.ReadValue<Vector2>();
+        if (stunDurationSeconds > 0) {
+            input = Vector3.zero;
+            stunDurationSeconds -= Time.fixedDeltaTime;
+        }
+
         Vector3 move = new Vector3(input.x, 0f, input.y);
         move = Vector3.ClampMagnitude(move, 1f);
 
