@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class TaskSpawnPoint : MonoBehaviour {
     public bool allowSpill = true;
     public bool allowTantrum = true;
-    // Configuration options go here
-
+    public bool allowCheckout = false;
+    // More configuration options can go here
 
     // Search for an available spawn point that fulfills the filter condition
     public static TaskSpawnPoint FindRandomSpawnPoint(System.Func<TaskSpawnPoint, bool> filter) {

@@ -11,7 +11,7 @@ public class Slowdown : MonoBehaviour {
 
     public void Start() {
         // Place myself on a valid spawn point
-        TaskSpawnPoint tsp = TaskSpawnPoint.FindRandomSpawnPoint(tsp => tsp.allowTantrum = true);
+        TaskSpawnPoint tsp = TaskSpawnPoint.FindRandomSpawnPoint(tsp => tsp.allowTantrum == true);
         if (tsp != null) {
             transform.SetParent(tsp.transform, false);
         } else {

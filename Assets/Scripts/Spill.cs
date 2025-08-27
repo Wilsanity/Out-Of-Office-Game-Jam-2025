@@ -3,7 +3,7 @@ using UnityEngine;
 public class Spill : MonoBehaviour, Interactable {
     public void Start() {
         // Place myself on a valid spawn point
-        TaskSpawnPoint tsp = TaskSpawnPoint.FindRandomSpawnPoint(tsp => tsp.allowSpill = true);
+        TaskSpawnPoint tsp = TaskSpawnPoint.FindRandomSpawnPoint(tsp => tsp.allowSpill == true);
         if(tsp != null) {
             transform.SetParent(tsp.transform, false);
         } else {
