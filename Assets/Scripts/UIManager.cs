@@ -74,6 +74,11 @@ public class UIManager : MonoBehaviour
     
     private void Start()
     {
+        if (gameManager == null)
+        {
+            Debug.LogError("GameManager reference not set in UIManager.");
+        }
+
         // Subscribe to GameManager events
         if (gameManager != null)
         {
@@ -86,7 +91,6 @@ public class UIManager : MonoBehaviour
 
         // Initialize UI
         bool gameManagerValid = gameManager != null;
-        Debug.Log("UI Manager: is gameManager valid: " + gameManagerValid);
         UpdateGameState(gameManager != null ? gameManager.CurrentState : GameManager.GameState.MainMenu);
         UpdateStoreScore(gameManager != null ? gameManager.StoreScore : 100);
 

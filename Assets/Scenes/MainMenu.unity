@@ -462,6 +462,17 @@ Transform:
   - {fileID: 1470205016}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &125339821 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2885511814180942985, guid: 90b832b2c9f5f304dba0598448d41865, type: 3}
+  m_PrefabInstance: {fileID: 1201465650}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dffab6a96a754454baf5ba498311f22a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TaskManager
 --- !u!1001 &125983583
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -976,6 +987,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4011260711899018875, guid: 8ecfc21446dfcb8489be0e8d81dc7890, type: 3}
+      propertyPath: taskManager
+      value: 
+      objectReference: {fileID: 125339821}
     - target: {fileID: 8003663103473428807, guid: 8ecfc21446dfcb8489be0e8d81dc7890, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.26838
@@ -3429,6 +3444,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2885511814180942985, guid: 90b832b2c9f5f304dba0598448d41865, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 822877531}
     - target: {fileID: 8112383542957183710, guid: 90b832b2c9f5f304dba0598448d41865, type: 3}
       propertyPath: m_Name
       value: TaskManager
