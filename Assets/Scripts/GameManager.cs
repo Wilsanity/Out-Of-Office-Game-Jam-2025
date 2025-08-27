@@ -1,9 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+
     [Header("Game State")]
     [SerializeField] private GameState currentState = GameState.MainMenu;
     
@@ -33,6 +36,7 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         MainMenu,
+        LevelSelect,
         Playing,
         Paused,
         LevelComplete,
@@ -41,6 +45,17 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
+        if (Instance != null)
+        {
+            //currentState = Instance.currentState;
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(Instance);
+        }
+
         if (taskManager == null)
         {
             Debug.LogError("TaskManager not found! Please add TaskManager to scene.");
@@ -49,7 +64,10 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
-        ChangeGameState(GameState.MainMenu);
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            ChangeGameState(GameState.MainMenu);
+        }
     }
     
     private void Update()
@@ -83,13 +101,21 @@ public class GameManager : MonoBehaviour
     
     public void StartGame()
     {
-        currentLevel = 1;
-        storeScore = maxStoreScore;
-        StartLevel();
+        // Default to level 1
+        StartGame(1);
     }
-    
-    public void StartLevel()
+
+    public void StartGame(int level)
     {
+        currentLevel = level;
+        storeScore = maxStoreScore;
+        StartLevel(level);
+    }
+
+    public void StartLevel(int level)
+    {
+        SceneManager.LoadScene("Level" + level.ToString());
+
         timeRemaining = levelDuration;
         ChangeGameState(GameState.Playing);
         
@@ -101,7 +127,7 @@ public class GameManager : MonoBehaviour
         
         Debug.Log($"Level {currentLevel} started!");
     }
-    
+
     public void CompleteLevel()
     {
         ChangeGameState(GameState.LevelComplete);
@@ -122,9 +148,14 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         currentLevel++;
-        StartLevel();
+        StartLevel(currentLevel);
     }
     
+    public void GoToLevelSelect()
+    {
+        ChangeGameState(GameState.LevelSelect);
+    }
+
     public void GameOver()
     {
         ChangeGameState(GameState.GameOver);
@@ -160,8 +191,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         storeScore = maxStoreScore;
-        currentLevel = 1;
-        StartLevel();
+        StartLevel(currentLevel);
     }
     
     public void ChangeStoreScore(int amount)

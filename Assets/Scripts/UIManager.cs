@@ -34,7 +34,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button startGameButton;
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI instructionsText;
-    
+
+    [Header("Level Select")]
+    [SerializeField] private GameObject levelSelectPanel;
+    [SerializeField] private Transform levelSelectContainer;
+
     [Header("Game Over")]
     [SerializeField] private TextMeshProUGUI gameOverTitleText;
     [SerializeField] private TextMeshProUGUI finalScoreText;
@@ -79,8 +83,10 @@ public class UIManager : MonoBehaviour
             gameManager.OnLevelComplete += ShowLevelComplete;
             gameManager.OnGameOver += ShowGameOver;
         }
-        
+
         // Initialize UI
+        bool gameManagerValid = gameManager != null;
+        Debug.Log("UI Manager: is gameManager valid: " + gameManagerValid);
         UpdateGameState(gameManager != null ? gameManager.CurrentState : GameManager.GameState.MainMenu);
         UpdateStoreScore(gameManager != null ? gameManager.StoreScore : 100);
 
@@ -122,8 +128,23 @@ public class UIManager : MonoBehaviour
     private void SetupButtons()
     {
         if (startGameButton != null)
-            startGameButton.onClick.AddListener(() => gameManager?.StartGame());
-        
+            startGameButton.onClick.AddListener(() => gameManager?.GoToLevelSelect());
+
+        Button[] levelSelectButtons = levelSelectContainer.GetComponentsInChildren<Button>();
+        for (int i = 0; i < levelSelectButtons.Length; i++)
+        {
+            Button button = levelSelectButtons[i];
+            int cachedI = i + 1;
+            TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+            if (buttonText)
+            {
+                buttonText.text = cachedI.ToString();
+
+            }
+
+            button.onClick.AddListener(() => gameManager?.StartLevel(cachedI));
+        }
+
         if (restartButton != null)
             restartButton.onClick.AddListener(() => gameManager?.RestartGame());
         
@@ -185,25 +206,31 @@ public class UIManager : MonoBehaviour
     {
         // Hide all panels first
         SetPanelActive(mainMenuPanel, false);
+        SetPanelActive(levelSelectPanel, false);
         SetPanelActive(hudPanel, false);
         SetPanelActive(gameOverPanel, false);
         SetPanelActive(levelCompletePanel, false);
         SetPanelActive(pausePanel, false);
         SetPanelActive(taskListPanel, false);
         SetPanelActive(interactionPrompt, false);
-        
+    
         // Show appropriate panels based on state
         switch (newState)
         {
             case GameManager.GameState.MainMenu:
                 SetPanelActive(mainMenuPanel, true);
                 if (titleText != null)
-                    titleText.text = "Store Bot Manager";
+                    titleText.text = "Retail Rampage";
                 if (instructionsText != null)
                     instructionsText.text = "Help the robot manage the store!\nComplete tasks to maintain your store rating.";
                 break;
-                
+
+            case GameManager.GameState.LevelSelect:
+                SetPanelActive(levelSelectPanel, true);
+                break;
+
             case GameManager.GameState.Playing:
+                SetPanelActive(mainMenuPanel, false);
                 SetPanelActive(hudPanel, true);
                 SetPanelActive(taskListPanel, true);
                 if (levelText != null && gameManager != null)
