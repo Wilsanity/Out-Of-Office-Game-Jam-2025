@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class TaskSpawnPoint : MonoBehaviour {
     public bool allowSpill = true;
+    public bool allowTantrum = true;
     // Configuration options go here
 
 

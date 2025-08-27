@@ -11,7 +11,6 @@ public class Player : MonoBehaviour {
     public InputActionReference moveAction; // expects Vector2
     public InputActionReference interactAction;
     public float moveSpeed = 2f;
-    public float fallSpeed = 2f;
     public float interactRadius = .75f;
     
     [Header("Animation")]
@@ -71,6 +70,14 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private float CalculateSpeed() {
+        float currentSpeed = moveSpeed;
+        foreach (Slowdown slowdown in FindObjectsByType<Slowdown>(FindObjectsSortMode.None)) {
+            currentSpeed *= slowdown.GetSlowdownAtPoint(transform.position);
+        }
+        return currentSpeed;
+    }
+
     private void FixedUpdate() {
         Vector2 input = moveAction.action.ReadValue<Vector2>();
         Vector3 move = new Vector3(input.x, 0f, input.y);
@@ -85,7 +92,7 @@ public class Player : MonoBehaviour {
             transform.forward = projectedMove;
         }
 
-        rb.linearVelocity = projectedMove * moveSpeed + Vector3.up * rb.linearVelocity.y;
+        rb.linearVelocity = projectedMove * CalculateSpeed() + Vector3.up * rb.linearVelocity.y;
 
         // Animation driving
         float inputMagnitude = input.magnitude;                // 0..1

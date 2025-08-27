@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &25945723 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e7f5c401f13e20418def346dfe7baac, type: 3}
@@ -214,6 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!114 &70331102 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5707136925822856520, guid: 03f6d2ced56136543898d2f3fad3720f, type: 3}
@@ -292,6 +294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &114072764
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,8 +326,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   taskSlots:
   - taskPrefab: {fileID: 3219396273858219813, guid: 5899986df37f14c4cb677473038be133, type: 3}
+    spawnChance: 3
+    spawnDelay: 1.5
+  - taskPrefab: {fileID: 8362586950437641250, guid: 648b961854378b944a3ef5bd95b1c1b1, type: 3}
     spawnChance: 1
-    spawnDelay: 2
+    spawnDelay: 1
 --- !u!4 &114072766
 Transform:
   m_ObjectHideFlags: 0
@@ -472,6 +478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1001 &204894340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1108,6 +1115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &549353054
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,6 +1161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &627228587
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,6 +1447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &823333915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1483,6 +1493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1661,7 +1672,7 @@ ReflectionProbe:
   m_Mode: 1
   m_RefreshMode: 0
   m_TimeSlicingMode: 0
-  m_Resolution: 128
+  m_Resolution: 64
   m_UpdateFrequency: 0
   m_BoxSize: {x: 10, y: 10, z: 10}
   m_BoxOffset: {x: 0, y: 0, z: 0}
@@ -2406,6 +2417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &1144592070
 GameObject:
   m_ObjectHideFlags: 0
@@ -2451,6 +2463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!114 &1172024477 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8531525161948870040, guid: 03f6d2ced56136543898d2f3fad3720f, type: 3}
@@ -2593,6 +2606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &1214071158
 GameObject:
   m_ObjectHideFlags: 0
@@ -2638,6 +2652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &1240341843
 GameObject:
   m_ObjectHideFlags: 0
@@ -2683,6 +2698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1001 &1341586299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2881,6 +2897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &1422531540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2926,6 +2943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &1428529471
 GameObject:
   m_ObjectHideFlags: 0
@@ -2971,6 +2989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &1459761879
 GameObject:
   m_ObjectHideFlags: 0
@@ -3016,6 +3035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1001 &1466140568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3123,6 +3143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1001 &1481744545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3262,6 +3283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &1495667707
 GameObject:
   m_ObjectHideFlags: 0
@@ -3307,6 +3329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &1523261467
 GameObject:
   m_ObjectHideFlags: 0
@@ -3352,6 +3375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!4 &1532130545 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7749371585805190696, guid: 7026a976f8c3e5444b6f396d5d1f7585, type: 3}
@@ -3402,6 +3426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1001 &1621684249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3541,6 +3566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1001 &1760458833
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3736,7 +3762,6 @@ MonoBehaviour:
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   interactAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   moveSpeed: 4
-  fallSpeed: 4
   interactRadius: 0.75
   sprintAction: {fileID: 0}
   sprintEnabled: 1
@@ -3989,6 +4014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!1 &1957308537
 GameObject:
   m_ObjectHideFlags: 0
@@ -4329,6 +4355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
+  allowTantrum: 1
 --- !u!114 &2090563287 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6701979400566858438, guid: 03f6d2ced56136543898d2f3fad3720f, type: 3}
