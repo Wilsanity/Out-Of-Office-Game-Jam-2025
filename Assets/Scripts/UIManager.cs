@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -13,11 +14,13 @@ public class UIManager : MonoBehaviour
     
     [Header("Main HUD")]
     [SerializeField] private GameObject hudPanel;
-    [SerializeField] private TextMeshProUGUI storeScoreText;
+    [SerializeField] private TextMeshProUGUI storeRatingText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI timerText;
-    [SerializeField] private Slider storeScoreSlider;
-    
+    [SerializeField] private Slider storeRatingSlider;
+    [SerializeField] private Slider timerSlider;
+
+
     [Header("Task UI")]
     [SerializeField] private GameObject taskListPanel;
     [SerializeField] private Transform taskListContainer;
@@ -92,7 +95,7 @@ public class UIManager : MonoBehaviour
         // Initialize UI
         bool gameManagerValid = gameManager != null;
         UpdateGameState(gameManager != null ? gameManager.CurrentState : GameManager.GameState.MainMenu);
-        UpdateStoreScore(gameManager != null ? gameManager.StoreScore : 100);
+        UpdateStoreScore(gameManager != null ? gameManager.StoreScore : 100f);
 
         pauseAction.action.started += context => OnPausePressed();
     }
@@ -134,19 +137,22 @@ public class UIManager : MonoBehaviour
         if (startGameButton != null)
             startGameButton.onClick.AddListener(() => gameManager?.GoToLevelSelect());
 
-        Button[] levelSelectButtons = levelSelectContainer.GetComponentsInChildren<Button>();
-        for (int i = 0; i < levelSelectButtons.Length; i++)
+        if (levelSelectContainer)
         {
-            Button button = levelSelectButtons[i];
-            int cachedI = i + 1;
-            TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
-            if (buttonText)
+            Button[] levelSelectButtons = levelSelectContainer.GetComponentsInChildren<Button>();
+            for (int i = 0; i < levelSelectButtons.Length; i++)
             {
-                buttonText.text = cachedI.ToString();
+                Button button = levelSelectButtons[i];
+                int cachedI = i + 1;
+                TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+                if (buttonText)
+                {
+                    buttonText.text = cachedI.ToString();
 
+                }
+
+                button.onClick.AddListener(() => gameManager?.LoadLevel(cachedI));
             }
-
-            button.onClick.AddListener(() => gameManager?.StartLevel(cachedI));
         }
 
         if (restartButton != null)
@@ -165,17 +171,17 @@ public class UIManager : MonoBehaviour
             pauseMainMenuButton.onClick.AddListener(() => ReturnToMainMenu());
     }
     
-    private void UpdateStoreScore(int score)
+    private void UpdateStoreScore(float score)
     {
-        if (storeScoreText != null)
-            storeScoreText.text = $"Store Rating: {score}";
+        if (storeRatingText != null)
+            storeRatingText.text = $"Store Rating";
         
-        if (storeScoreSlider != null)
+        if (storeRatingSlider != null)
         {
-            storeScoreSlider.value = score / 100f; // Assuming max score is 100
+            storeRatingSlider.value = score / 100f; // Assuming max score is 100
             
             // Change color based on score
-            Image fillImage = storeScoreSlider.fillRect?.GetComponent<Image>();
+            Image fillImage = storeRatingSlider.fillRect?.GetComponent<Image>();
             if (fillImage != null)
             {
                 if (score > 60)
@@ -190,19 +196,34 @@ public class UIManager : MonoBehaviour
     
     private void UpdateTimer(float timeRemaining)
     {
+        Color timerColor;
+
+        // Change color when time is running out
+        if (timeRemaining < 30f)
+            timerColor = Color.red;
+        else if (timeRemaining < 60f)
+            timerColor = Color.yellow;
+        else
+            timerColor = Color.white;
+
         if (timerText != null)
         {
             int minutes = Mathf.FloorToInt(timeRemaining / 60);
             int seconds = Mathf.FloorToInt(timeRemaining % 60);
             timerText.text = $"Time: {minutes:00}:{seconds:00}";
-            
-            // Change color when time is running out
-            if (timeRemaining < 30f)
-                timerText.color = Color.red;
-            else if (timeRemaining < 60f)
-                timerText.color = Color.yellow;
-            else
-                timerText.color = Color.white;
+            timerText.color = timerColor;
+        }
+
+        if (timerSlider != null)
+        {
+            timerSlider.value = timeRemaining / 120f; // Assuming 2 minutes per level
+
+            // Change color based on time remaining
+            Image fillImage = timerSlider.fillRect?.GetComponent<Image>();
+            if (fillImage != null)
+            {
+                fillImage.color = timerColor;
+            }
         }
     }
     
@@ -230,6 +251,7 @@ public class UIManager : MonoBehaviour
                 break;
 
             case GameManager.GameState.LevelSelect:
+                SetPanelActive(mainMenuPanel, false);
                 SetPanelActive(levelSelectPanel, true);
                 break;
 
@@ -237,6 +259,7 @@ public class UIManager : MonoBehaviour
                 SetPanelActive(mainMenuPanel, false);
                 SetPanelActive(hudPanel, true);
                 SetPanelActive(taskListPanel, true);
+                SetPanelActive(pausePanel, false);
                 if (levelText != null && gameManager != null)
                     levelText.text = $"Level: {gameManager.CurrentLevel}";
                 break;
@@ -358,10 +381,9 @@ public class UIManager : MonoBehaviour
     
     private void ReturnToMainMenu()
     {
-        Time.timeScale = 1f; // Reset time scale
         if (gameManager != null)
         {
-            gameManager.RestartGame(); // This will reset to main menu state
+            gameManager.ReturnToMainMenu(); // This will reset to main menu state
         }
     }
     
