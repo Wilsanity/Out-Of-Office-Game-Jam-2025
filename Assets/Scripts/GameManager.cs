@@ -100,7 +100,6 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        currentLevel = 1;
         storeScore = maxStoreScore;
         StartLevel();
     }
