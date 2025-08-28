@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class Spill : MonoBehaviour, Interactable {
+public class Spill : CommonInteractions, Interactable {
+
     [SerializeField] float damagePerSecond = 4f;
 
     private GameManager gm;
-
+    
+    [SerializeField] AudioClip cleanSpill;
+    
     public void Start() {
         // Place myself on a valid spawn point
         TaskSpawnPoint tsp = TaskSpawnPoint.FindRandomSpawnPoint(tsp => tsp.allowSpill == true);
@@ -23,9 +26,16 @@ public class Spill : MonoBehaviour, Interactable {
     }
 
     public void Interact(Player source) {
-        GameObject.Destroy(gameObject);
+        PlaySfx(cleanSpill);
+        GetComponent<Renderer>().enabled = false;
+        Invoke("DestroySpill", cleanSpill.length);
     }
 
+    private void DestroySpill()
+    {
+        Destroy(gameObject);
+    }
+    
     public void Update() {
         gm.ChangeStoreScore(-damagePerSecond * Time.deltaTime);
     }

@@ -6,6 +6,7 @@ public class TaskSpawnPoint : MonoBehaviour {
     public bool allowSpill = true;
     public bool allowTantrum = true;
     public bool allowCheckout = false;
+    public bool allowEscort = false;
     // More configuration options can go here
 
     // Search for an available spawn point that fulfills the filter condition

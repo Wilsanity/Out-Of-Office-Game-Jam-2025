@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     {
         if (taskManager == null)
         {
-            Debug.LogError("TaskManager not found! Please add TaskManager to scene.");
+            // Debug.LogError("TaskManager not found! Please add TaskManager to scene.");
         }
     }
 

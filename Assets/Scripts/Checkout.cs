@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Checkout : MonoBehaviour, Interactable {
+public class Checkout : CommonInteractions, Interactable {
     [SerializeField] float itemDelay = 1f;
     [SerializeField] int itemCount = 5;
     [SerializeField] float damagePerSecond = 8f;
@@ -8,6 +8,11 @@ public class Checkout : MonoBehaviour, Interactable {
     float itemCountdownSeconds = 0;
 
     private GameManager gm;
+
+    [Header("Audio")] 
+    [SerializeField] private AudioClip beep;
+    [SerializeField] private AudioClip thankYou;
+    [SerializeField] private AudioClip sadBeep;
 
     public void Start() {
         // Place myself on a valid spawn point
@@ -29,15 +34,15 @@ public class Checkout : MonoBehaviour, Interactable {
     public void Interact(Player source) {
         if (readyItemCount > 0) {
             readyItemCount--;
-            // TODO: "BEEP!"
+            PlaySfx(beep);
             if (readyItemCount <= 0 && itemCount <= 0) {
                 GameObject.Destroy(gameObject);
-                //TODO: "Thank you, come again!"
+                PlaySfx(thankYou);
             }
 
             GetComponentInChildren<TMPro.TMP_Text>().text = readyItemCount.ToString();
         } else {
-            // TODO: "sad beep"
+            PlaySfx(sadBeep);
         }
     }
 

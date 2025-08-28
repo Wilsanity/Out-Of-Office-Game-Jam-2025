@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour {
     private Rigidbody rb;
@@ -18,11 +19,17 @@ public class Player : MonoBehaviour {
     [SerializeField] private InputActionReference sprintAction; // optional, Button
     [SerializeField] private bool sprintEnabled = true; // Toggle sprint functionality
     [SerializeField, Range(0f, 1f)] private float sprintThreshold = 0.9f; // used if sprintAction is not assigned
+    
+    [Header("Audio")]
+    [SerializeField] private AudioSource footstepsAudioSource;
+    [SerializeField] private AudioSource sfxAudioSource;
+    [SerializeField] float footstepsVolume = 0.5f;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-
+        footstepsAudioSource.volume = 0f;
+        
         interactAction.action.started += context => Interact();
     }
     
@@ -119,5 +126,8 @@ public class Player : MonoBehaviour {
             animator.SetBool("IsMoving", isMoving);
             animator.SetBool("IsSprinting", isSprinting && isMoving);
         }
+        
+        //Audio settings
+        footstepsAudioSource.volume = isMoving ? footstepsVolume : 0;
     }
 }
