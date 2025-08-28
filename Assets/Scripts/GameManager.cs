@@ -74,13 +74,6 @@ public class GameManager : MonoBehaviour
 
     private void UpdateGameplay()
     {
-        // Update timer
-        timeRemaining -= Time.deltaTime;
-        OnTimeChanged?.Invoke(timeRemaining);
-
-        // Add to the store score that scales with difficulty
-        ChangeStoreScore(Time.deltaTime * healthRegen);
-
         // Check win condition
         if (timeRemaining <= 0)
         {
@@ -92,6 +85,13 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
+
+        // Update timer
+        timeRemaining -= Time.deltaTime;
+        OnTimeChanged?.Invoke(timeRemaining);
+
+        // Add to the store score that scales with difficulty
+        ChangeStoreScore(Time.deltaTime * healthRegen);
     }
 
     public void GoToLevelSelect()
@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
         storeScore = Mathf.Clamp(storeScore + amount, 0, maxStoreScore);
         OnStoreScoreChanged?.Invoke(storeScore);
 
-        Debug.Log($"Store Score: {storeScore} (changed by {amount})");
+        //Debug.Log($"Store Score: {storeScore} (changed by {amount})");
     }
 
     private void ChangeGameState(GameState newState)
