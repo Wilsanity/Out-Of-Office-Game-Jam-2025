@@ -3,8 +3,11 @@ using UnityEngine;
 public class Checkout : MonoBehaviour, Interactable {
     [SerializeField] float itemDelay = 1f;
     [SerializeField] int itemCount = 5;
+    [SerializeField] float damagePerSecond = 8f;
     int readyItemCount = 0;
     float itemCountdownSeconds = 0;
+
+    private GameManager gm;
 
     public void Start() {
         // Place myself on a valid spawn point
@@ -15,6 +18,8 @@ public class Checkout : MonoBehaviour, Interactable {
             Debug.LogWarning("No spawn points found!");
             GameObject.Destroy(gameObject);
         }
+
+        gm = Object.FindAnyObjectByType<GameManager>();
     }
 
     public void SetHighlight(bool highlighted) {
@@ -48,10 +53,8 @@ public class Checkout : MonoBehaviour, Interactable {
                     //TODO: Do something to attract attention from the player
                 }
             }
-        }
-
-        if (itemCount == 0) {
-            //TODO: cause heavy damage over time
+        } else { // ready and waiting for player
+            gm.ChangeStoreScore(-damagePerSecond * Time.deltaTime);
         }
     }
 }

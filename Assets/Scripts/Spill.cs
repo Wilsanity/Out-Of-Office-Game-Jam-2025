@@ -1,6 +1,10 @@
 using UnityEngine;
 
 public class Spill : MonoBehaviour, Interactable {
+    [SerializeField] float damagePerSecond = 4f;
+
+    private GameManager gm;
+
     public void Start() {
         // Place myself on a valid spawn point
         TaskSpawnPoint tsp = TaskSpawnPoint.FindRandomSpawnPoint(tsp => tsp.allowSpill == true);
@@ -10,6 +14,8 @@ public class Spill : MonoBehaviour, Interactable {
             Debug.LogWarning("No spawn points found!");
             GameObject.Destroy(gameObject);
         }
+
+        gm = Object.FindAnyObjectByType<GameManager>();
     }
 
     public void SetHighlight(bool highlighted) {
@@ -21,6 +27,6 @@ public class Spill : MonoBehaviour, Interactable {
     }
 
     public void Update() {
-        //TODO: cause damage over time
+        gm.ChangeStoreScore(-damagePerSecond * Time.deltaTime);
     }
 }

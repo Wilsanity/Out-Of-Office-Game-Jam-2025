@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [Header("Level Settings")]
     [SerializeField] private int currentLevel = 1;
     [SerializeField] private float levelDuration = 120f; // 2 minutes per level
+    [SerializeField] private float healthRegen = 4f;
     [SerializeField] private float timeRemaining;
 
     [Header("Task Spawning")]
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
         OnTimeChanged?.Invoke(timeRemaining);
 
         // Add to the store score that scales with difficulty
-        ChangeStoreScore(Time.deltaTime * currentLevel * 2); // TODO: define a constant/mathematical function
+        ChangeStoreScore(Time.deltaTime * healthRegen);
 
         // Check win condition
         if (timeRemaining <= 0)
