@@ -16,7 +16,8 @@ public class GameManager : MonoBehaviour
     [Header("Level Settings")]
     [SerializeField] private int currentLevel = 1;
     [SerializeField] private float levelDuration = 120f; // 2 minutes per level
-    [SerializeField] private float healthRegen = 4f;
+    [SerializeField] private float damageMultiplier = 1f;
+    [SerializeField] private float healingMultiplier = 1f;
     [SerializeField] private float timeRemaining;
 
     [Header("Task Spawning")]
@@ -89,9 +90,6 @@ public class GameManager : MonoBehaviour
         // Update timer
         timeRemaining -= Time.deltaTime;
         OnTimeChanged?.Invoke(timeRemaining);
-
-        // Add to the store score that scales with difficulty
-        ChangeStoreScore(Time.deltaTime * healthRegen);
     }
 
     public void GoToLevelSelect()
@@ -192,6 +190,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeStoreScore(float amount)
     {
+        amount *= amount > 0 ? healingMultiplier : damageMultiplier;
         storeScore = Mathf.Clamp(storeScore + amount, 0, maxStoreScore);
         OnStoreScoreChanged?.Invoke(storeScore);
 

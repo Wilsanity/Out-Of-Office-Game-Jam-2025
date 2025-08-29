@@ -2861,7 +2861,7 @@ MonoBehaviour:
   gameOverThreshold: 0
   currentLevel: 1
   levelDuration: 120
-  healthRegen: 4
+  healthRegen: 0
   timeRemaining: 0
   taskSpawnInterval: 10
   maxConcurrentTasks: 3

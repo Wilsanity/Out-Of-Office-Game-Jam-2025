@@ -3,6 +3,7 @@ using UnityEngine;
 public class Spill : CommonInteractions, Interactable {
 
     [SerializeField] float damagePerSecond = 4f;
+    [SerializeField] float healthRefill = 10f;
 
     private GameManager gm;
     
@@ -26,13 +27,13 @@ public class Spill : CommonInteractions, Interactable {
     }
 
     public void Interact(Player source) {
+        gm.ChangeStoreScore(healthRefill);
         PlaySfx(cleanSpill);
-        GetComponent<Renderer>().enabled = false;
+        gameObject.SetActive(false);
         Invoke("DestroySpill", cleanSpill.length);
     }
 
-    private void DestroySpill()
-    {
+    private void DestroySpill() {
         Destroy(gameObject);
     }
     
