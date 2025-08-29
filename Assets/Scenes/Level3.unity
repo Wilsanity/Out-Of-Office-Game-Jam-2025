@@ -459,6 +459,7 @@ MonoBehaviour:
   allowTantrum: 1
   allowCheckout: 0
   allowEscort: 0
+  isFree: 1
 --- !u!1001 &209539982
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1052,6 +1053,7 @@ MonoBehaviour:
   allowTantrum: 1
   allowCheckout: 0
   allowEscort: 0
+  isFree: 1
 --- !u!114 &520947607 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1938310286953047276, guid: aaa6e8e49036e5941b4a3bbe11f332b1, type: 3}
@@ -1543,6 +1545,7 @@ MonoBehaviour:
   allowTantrum: 1
   allowCheckout: 0
   allowEscort: 0
+  isFree: 1
 --- !u!1 &766507043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,6 +1594,7 @@ MonoBehaviour:
   allowTantrum: 1
   allowCheckout: 0
   allowEscort: 0
+  isFree: 1
 --- !u!1001 &767718697
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2151,6 +2155,7 @@ MonoBehaviour:
   allowTantrum: 1
   allowCheckout: 0
   allowEscort: 0
+  isFree: 1
 --- !u!1 &917957099
 GameObject:
   m_ObjectHideFlags: 0
@@ -2987,6 +2992,7 @@ MonoBehaviour:
   allowTantrum: 1
   allowCheckout: 0
   allowEscort: 0
+  isFree: 1
 --- !u!114 &1234787728 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8580475032960090261, guid: aaa6e8e49036e5941b4a3bbe11f332b1, type: 3}
@@ -3120,6 +3126,7 @@ MonoBehaviour:
   allowTantrum: 1
   allowCheckout: 0
   allowEscort: 0
+  isFree: 1
 --- !u!1001 &1341586299
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3252,7 +3259,7 @@ MonoBehaviour:
   storeScore: 100
   maxStoreScore: 100
   gameOverThreshold: 0
-  currentLevel: 1
+  currentLevel: 3
   levelDuration: 120
   damageMultiplier: 1
   healingMultiplier: 1
@@ -3663,6 +3670,7 @@ MonoBehaviour:
   allowTantrum: 1
   allowCheckout: 0
   allowEscort: 0
+  isFree: 1
 --- !u!4 &1532130545 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7749371585805190696, guid: 7026a976f8c3e5444b6f396d5d1f7585, type: 3}
@@ -3761,6 +3769,7 @@ MonoBehaviour:
   allowTantrum: 1
   allowCheckout: 0
   allowEscort: 0
+  isFree: 1
 --- !u!1001 &1589165611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3877,6 +3886,7 @@ MonoBehaviour:
   allowTantrum: 1
   allowCheckout: 0
   allowEscort: 0
+  isFree: 1
 --- !u!1001 &1621684249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4186,6 +4196,7 @@ MonoBehaviour:
   allowTantrum: 1
   allowCheckout: 0
   allowEscort: 0
+  isFree: 1
 --- !u!1 &1957308537
 GameObject:
   m_ObjectHideFlags: 0
