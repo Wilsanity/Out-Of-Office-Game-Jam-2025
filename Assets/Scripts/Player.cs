@@ -67,10 +67,10 @@ public class Player : MonoBehaviour {
             }
         }
         if (nearest != highlighted) {
-            if (highlighted != null) {
+            if ((Object) highlighted != null) {
                 highlighted.SetHighlight(false);
             }
-            if (nearest != null) {
+            if ((Object) nearest != null) {
                 nearest.SetHighlight(true);
             }
             highlighted = nearest;
@@ -81,7 +81,7 @@ public class Player : MonoBehaviour {
         if (stunDurationSeconds > 0) {
             return;
         }
-        if (highlighted != null) {
+        if ((Object) highlighted != null) {
             highlighted.Interact(this);
         }
     }
