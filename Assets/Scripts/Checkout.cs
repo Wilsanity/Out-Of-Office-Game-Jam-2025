@@ -46,7 +46,9 @@ public class Checkout : MonoBehaviour, Interactable {
             source.PlaySfx(beep);
             if (readyItemCount <= 0 && itemCount <= 0) {
                 gm.ChangeStoreScore(healthRefill);
-                source.PlaySfx(thankYou);
+                if (Random.value > .8) {
+                    source.PlaySfx(thankYou);
+                }
                 SetHighlight(false);
                 GameObject.Destroy(gameObject);
             }
