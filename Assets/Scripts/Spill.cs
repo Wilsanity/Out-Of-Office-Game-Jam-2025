@@ -6,6 +6,7 @@ public class Spill : MonoBehaviour, Interactable {
     [SerializeField] float healthRefill = 10f;
 
     private GameManager gm;
+    private Renderer renderer;
     
     [Header("Audio")]
     [SerializeField] private AudioClip cleanSpill;
@@ -26,6 +27,7 @@ public class Spill : MonoBehaviour, Interactable {
         }
 
         gm = Object.FindAnyObjectByType<GameManager>();
+        renderer =  gameObject.GetComponent<Renderer>();
     }
 
     public void SetHighlight(bool highlighted) {
@@ -35,7 +37,7 @@ public class Spill : MonoBehaviour, Interactable {
     public void Interact(Player source) {
         gm.ChangeStoreScore(healthRefill);
         source.PlaySfx(cleanSpill);
-        gameObject.SetActive(false);
+        renderer.enabled = false;
         Invoke("DestroySpill", cleanSpill.length);
     }
 
