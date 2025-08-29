@@ -48,8 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   itemDelay: 1
   itemCount: 5
-  damagePerSecond: 2
-  healthRefill: 25
+  damagePerSecond: 5
+  healthRefill: 15
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   beep: {fileID: 8300000, guid: ed03d550866d2c6469dbb4e0c1abcef3, type: 3}
   thankYou: {fileID: 8300000, guid: 0f0d2169485c6ce42a9137de13af5ada, type: 3}
@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.75}
+  m_AnchoredPosition: {x: 0, y: 0.65}
   m_SizeDelta: {x: 1, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &4007430818230192207
@@ -207,8 +207,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 5
-  m_fontSizeBase: 5
+  m_fontSize: 9
+  m_fontSizeBase: 9
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -67,8 +67,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9f349adc263ab44094ec32532a0589d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  damagePerSecond: 1
-  healthRefill: 15
+  damagePerSecond: 2
+  healthRefill: 10
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   cleanSpill: {fileID: 8300000, guid: ce6488d45ee07ab409551e68ebb7e7e7, type: 3}
 --- !u!1 &9061556891125086194
 GameObject:
