@@ -23,11 +23,10 @@ public class GameTestHelper : MonoBehaviour
         // Test controls
         if (Input.GetKeyDown(startGameKey))
         {
-            if (gameManager.CurrentState == GameManager.GameState.MainMenu || 
-                gameManager.CurrentState == GameManager.GameState.GameOver)
+            if (gameManager.CurrentState == GameManager.GameState.GameOver)
             {
-                gameManager.StartGame();
-                Debug.Log("Game started!");
+                gameManager.RestartGame();
+                Debug.Log("Game restarted!");
             }
         }
         
@@ -52,8 +51,7 @@ public class GameTestHelper : MonoBehaviour
         
         GUILayout.Space(10);
         
-        if (gameManager.CurrentState == GameManager.GameState.MainMenu ||
-            gameManager.CurrentState == GameManager.GameState.GameOver)
+        if (gameManager.CurrentState == GameManager.GameState.GameOver)
         {
             GUILayout.Label($"Press {startGameKey} to start game");
         }
