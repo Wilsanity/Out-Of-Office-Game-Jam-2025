@@ -10,6 +10,9 @@ public class Checkout : MonoBehaviour, Interactable {
 
     private GameManager gm;
 
+    [SerializeField] Color highlightColor = Color.yellow;
+    private Color baseColor = Color.blue;
+
     [Header("Audio")] 
     [SerializeField] private AudioClip beep;
     [SerializeField] private AudioClip thankYou;
@@ -26,10 +29,12 @@ public class Checkout : MonoBehaviour, Interactable {
         }
 
         gm = Object.FindAnyObjectByType<GameManager>();
+
+        baseColor = GetComponentInParent<MeshRenderer>().material.color;
     }
 
     public void SetHighlight(bool highlighted) {
-        //TODO: implement highlight
+        GetComponentInParent<MeshRenderer>().material.color = highlighted ? highlightColor : baseColor;
     }
 
     public void Interact(Player source) {
@@ -39,6 +44,7 @@ public class Checkout : MonoBehaviour, Interactable {
             if (readyItemCount <= 0 && itemCount <= 0) {
                 gm.ChangeStoreScore(healthRefill);
                 source.PlaySfx(thankYou);
+                SetHighlight(false);
                 GameObject.Destroy(gameObject);
             }
 

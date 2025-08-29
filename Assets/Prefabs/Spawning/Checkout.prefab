@@ -50,7 +50,8 @@ MonoBehaviour:
   itemCount: 5
   damagePerSecond: 2
   healthRefill: 25
-  beep: {fileID: 8300000, guid: e4f4bb478ce7e704ba35160d0a8c7d8d, type: 3}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  beep: {fileID: 8300000, guid: ed03d550866d2c6469dbb4e0c1abcef3, type: 3}
   thankYou: {fileID: 8300000, guid: 0f0d2169485c6ce42a9137de13af5ada, type: 3}
   sadBeep: {fileID: 8300000, guid: bd5e860e1d5ef5546874dd6779b09d43, type: 3}
 --- !u!65 &5324788754937613152

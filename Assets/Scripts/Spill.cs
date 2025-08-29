@@ -5,8 +5,10 @@ public class Spill : MonoBehaviour, Interactable {
     [SerializeField] float damagePerSecond = 4f;
     [SerializeField] float healthRefill = 10f;
 
+    [SerializeField] Color highlightColor = Color.yellow;
+    private Color baseColor = Color.blue;
+
     private GameManager gm;
-    private Renderer renderer;
     
     [Header("Audio")]
     [SerializeField] private AudioClip cleanSpill;
@@ -27,22 +29,20 @@ public class Spill : MonoBehaviour, Interactable {
         }
 
         gm = Object.FindAnyObjectByType<GameManager>();
-        renderer =  gameObject.GetComponent<Renderer>();
+        baseColor = GetComponentInChildren<MeshRenderer>().material.color;
     }
 
     public void SetHighlight(bool highlighted) {
-        //TODO: implement highlight
+        GetComponentInChildren<MeshRenderer>().material.color = highlighted ? highlightColor : baseColor;
     }
 
     public void Interact(Player source) {
         gm.ChangeStoreScore(healthRefill);
         source.PlaySfx(cleanSpill);
-        renderer.enabled = false;
-        Invoke("DestroySpill", cleanSpill.length);
+        Destroy(gameObject);
     }
 
     private void DestroySpill() {
-        Destroy(gameObject);
     }
     
     public void Update() {
