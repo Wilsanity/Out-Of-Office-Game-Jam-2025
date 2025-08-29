@@ -126,7 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   audioSource: {fileID: 3147268578229855876}
-  cleanSpill: {fileID: 8300000, guid: e0ed3378bfe06c5489ca394ecde7275e, type: 3}
+  damagePerSecond: 4
+  cleanSpill: {fileID: 8300000, guid: 71fe3d3af509d4f4a948ffcbf8b83273, type: 3}
 --- !u!82 &3147268578229855876
 AudioSource:
   m_ObjectHideFlags: 0
