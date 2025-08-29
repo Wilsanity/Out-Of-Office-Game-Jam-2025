@@ -10,6 +10,11 @@ public class Spill : CommonInteractions, Interactable {
     [SerializeField] AudioClip cleanSpill;
     
     public void Start() {
+
+        // Randomly scale the spill
+        float scale = Random.Range(0.5f, 0.8f);
+        transform.localScale = new Vector3(scale, 0.01f, scale);
+
         // Place myself on a valid spawn point
         TaskSpawnPoint tsp = TaskSpawnPoint.FindRandomSpawnPoint(tsp => tsp.allowSpill == true);
         if(tsp != null) {

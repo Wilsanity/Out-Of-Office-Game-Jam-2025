@@ -50,7 +50,8 @@ MonoBehaviour:
   audioSource: {fileID: 258882228033914373}
   itemDelay: 1
   itemCount: 5
-  damagePerSecond: 8
+  damagePerSecond: 2
+  healthRefill: 25
   beep: {fileID: 8300000, guid: e4f4bb478ce7e704ba35160d0a8c7d8d, type: 3}
   thankYou: {fileID: 8300000, guid: 0f0d2169485c6ce42a9137de13af5ada, type: 3}
   sadBeep: {fileID: 8300000, guid: bd5e860e1d5ef5546874dd6779b09d43, type: 3}
