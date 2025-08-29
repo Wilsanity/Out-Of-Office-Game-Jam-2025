@@ -210,7 +210,7 @@ public class UIManager : MonoBehaviour
         {
             int minutes = Mathf.FloorToInt(timeRemaining / 60);
             int seconds = Mathf.FloorToInt(timeRemaining % 60);
-            timerText.text = $"Time: {minutes:00}:{seconds:00}";
+            timerText.text = $"Time Left: {minutes:00}:{seconds:00}";
             timerText.color = timerColor;
         }
 
