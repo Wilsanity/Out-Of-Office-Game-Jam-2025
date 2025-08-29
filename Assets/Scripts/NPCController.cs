@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class NPCController : MonoBehaviour
 {
     [Header("Patrol Settings")]
-    [SerializeField] private Transform[] patrolPoints;
+    [SerializeField] private Transform patrolPoints;
     [SerializeField] private float minWaitTime = 2f;
     [SerializeField] private float maxWaitTime = 5f;
     [SerializeField] private bool startPatrollingOnStart = true;
@@ -54,9 +54,9 @@ public class NPCController : MonoBehaviour
         {
             attackAction.action.performed += OnAttackPerformed;
         }
-        
+
         // Start patrolling if enabled
-        if (startPatrollingOnStart && patrolPoints.Length > 0)
+        if (startPatrollingOnStart && patrolPoints != null)
         {
             StartPatrolling();
         }
@@ -110,7 +110,7 @@ public class NPCController : MonoBehaviour
     
     public void StartPatrolling()
     {
-        if (isDestroyed || patrolPoints.Length == 0)
+        if (isDestroyed || patrolPoints == null)
         {
             Debug.LogWarning("No patrol points assigned to NPCController!");
             return;
@@ -149,7 +149,7 @@ public class NPCController : MonoBehaviour
             }
             
             currentTargetIndex = targetIndex;
-            Vector3 targetPosition = patrolPoints[targetIndex].position;
+            Vector3 targetPosition = patrolPoints.GetChild(targetIndex).position;
             
             // Move to the target position
             m_Agent.SetDestination(targetPosition);
@@ -160,7 +160,7 @@ public class NPCController : MonoBehaviour
             // Wait for a random duration at the point with random animations
             isWaiting = true;
             float waitTime = Random.Range(minWaitTime, maxWaitTime);
-            Debug.Log($"NPC reached patrol point {targetIndex}, waiting for {waitTime:F1} seconds");
+            //Debug.Log($"NPC reached patrol point {targetIndex}, waiting for {waitTime:F1} seconds");
             
             // Play random animations during the wait period
             if (enableRandomAnimations && m_Animator != null)
@@ -197,12 +197,9 @@ public class NPCController : MonoBehaviour
     private void RefreshAvailablePoints()
     {
         availablePointIndices.Clear();
-        for (int i = 0; i < patrolPoints.Length; i++)
+        for (int i = 0; i < patrolPoints.childCount; i++)
         {
-            if (patrolPoints[i] != null)
-            {
-                availablePointIndices.Add(i);
-            }
+            availablePointIndices.Add(i);
         }
     }
     
@@ -289,7 +286,7 @@ public class NPCController : MonoBehaviour
         // Method 2: If using direct Play (uncomment if needed)
         m_Animator.CrossFade(animationName, 0.2f);
         
-        Debug.Log($"Playing random animation: {animationName}");
+        //Debug.Log($"Playing random animation: {animationName}");
     }
 
     private void Update()
@@ -370,7 +367,7 @@ public class NPCController : MonoBehaviour
     public bool IsPatrolling => isPatrolling;
     public bool IsWaiting => isWaiting;
     public int CurrentTargetIndex => currentTargetIndex;
-    public Transform[] PatrolPoints => patrolPoints;
+    public Transform PatrolPoints => patrolPoints;
     public string[] IdleAnimations => idleAnimations;
     public bool EnableRandomAnimations => enableRandomAnimations;
     
