@@ -29,7 +29,6 @@ public class Spill : MonoBehaviour, Interactable {
         }
 
         gm = Object.FindAnyObjectByType<GameManager>();
-
         baseColor = GetComponentInChildren<MeshRenderer>().material.color;
     }
 

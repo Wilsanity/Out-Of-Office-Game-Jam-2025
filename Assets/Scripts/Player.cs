@@ -32,20 +32,6 @@ public class Player : MonoBehaviour {
 
         interactAction.action.started += context => Interact();
     }
-    
-    /// <summary>
-    /// Enable or disable sprint functionality
-    /// </summary>
-    public void SetSprintEnabled(bool enabled) {
-        sprintEnabled = enabled;
-    }
-    
-    /// <summary>
-    /// Check if sprint is currently enabled
-    /// </summary>
-    public bool IsSprintEnabled() {
-        return sprintEnabled;
-    }
 
     public void Stun (float durationSeconds) {
         stunDurationSeconds = Mathf.Max(stunDurationSeconds, durationSeconds);
