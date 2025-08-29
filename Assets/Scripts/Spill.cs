@@ -1,13 +1,14 @@
 using UnityEngine;
 
-public class Spill : SpawnableTask, Interactable {
+public class Spill : MonoBehaviour, Interactable {
 
     [SerializeField] float damagePerSecond = 4f;
     [SerializeField] float healthRefill = 10f;
 
     private GameManager gm;
     
-    [SerializeField] AudioClip cleanSpill;
+    [Header("Audio")]
+    [SerializeField] private AudioClip cleanSpill;
     
     public void Start() {
 
@@ -33,7 +34,7 @@ public class Spill : SpawnableTask, Interactable {
 
     public void Interact(Player source) {
         gm.ChangeStoreScore(healthRefill);
-        PlaySfx(cleanSpill);
+        source.PlaySfx(cleanSpill);
         gameObject.SetActive(false);
         Invoke("DestroySpill", cleanSpill.length);
     }

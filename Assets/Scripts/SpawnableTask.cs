@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class SpawnableTask : MonoBehaviour
 {
     [SerializeField] AudioSource audioSource;

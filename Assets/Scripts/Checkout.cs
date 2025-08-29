@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Checkout : SpawnableTask, Interactable {
+public class Checkout : MonoBehaviour, Interactable {
     [SerializeField] float itemDelay = 1f;
     [SerializeField] int itemCount = 5;
     [SerializeField] float damagePerSecond = 8f;
@@ -35,16 +35,16 @@ public class Checkout : SpawnableTask, Interactable {
     public void Interact(Player source) {
         if (readyItemCount > 0) {
             readyItemCount--;
-            PlaySfx(beep);
+            source.PlaySfx(beep);
             if (readyItemCount <= 0 && itemCount <= 0) {
                 gm.ChangeStoreScore(healthRefill);
-                PlaySfx(thankYou);
+                source.PlaySfx(thankYou);
                 GameObject.Destroy(gameObject);
             }
 
             GetComponentInChildren<TMPro.TMP_Text>().text = readyItemCount.ToString();
         } else {
-            PlaySfx(sadBeep);
+            source.PlaySfx(sadBeep);
         }
     }
 

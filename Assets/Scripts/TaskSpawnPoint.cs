@@ -8,6 +8,7 @@ public class TaskSpawnPoint : MonoBehaviour {
     public bool allowCheckout = false;
     public bool allowEscort = false;
     // More configuration options can go here
+    public Renderer spawnPointRenderer = null;
 
     // Search for an available spawn point that fulfills the filter condition
     public static TaskSpawnPoint FindRandomSpawnPoint(System.Func<TaskSpawnPoint, bool> filter) {

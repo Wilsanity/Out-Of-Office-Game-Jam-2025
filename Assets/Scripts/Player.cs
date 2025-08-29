@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         footstepsAudioSource.volume = 0f;
-        
+
         interactAction.action.started += context => Interact();
     }
     
@@ -129,5 +129,10 @@ public class Player : MonoBehaviour {
         
         //Audio settings
         footstepsAudioSource.volume = isMoving ? footstepsVolume : 0;
+    }
+
+    public void PlaySfx(AudioClip clip)
+    {
+        sfxAudioSource.PlayOneShot(clip);
     }
 }
