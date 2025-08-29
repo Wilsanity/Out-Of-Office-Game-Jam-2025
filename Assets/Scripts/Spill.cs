@@ -39,12 +39,10 @@ public class Spill : MonoBehaviour, Interactable {
     public void Interact(Player source) {
         gm.ChangeStoreScore(healthRefill);
         source.PlaySfx(cleanSpill);
-        gameObject.SetActive(false);
-        Invoke("DestroySpill", cleanSpill.length);
+        Destroy(gameObject);
     }
 
     private void DestroySpill() {
-        Destroy(gameObject);
     }
     
     public void Update() {
