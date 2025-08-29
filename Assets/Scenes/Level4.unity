@@ -5473,7 +5473,7 @@ MonoBehaviour:
   storeScore: 100
   maxStoreScore: 100
   gameOverThreshold: 0
-  currentLevel: 5
+  currentLevel: 4
   levelDuration: 120
   damageMultiplier: 1
   healingMultiplier: 1

@@ -31,6 +31,8 @@ public class Checkout : MonoBehaviour, Interactable {
         gm = Object.FindAnyObjectByType<GameManager>();
 
         baseColor = GetComponentInParent<MeshRenderer>().material.color;
+
+        GetComponentInChildren<TMPro.TMP_Text>().GetComponent<RectTransform>().rotation = Quaternion.Euler(90, 0, 0);
     }
 
     public void SetHighlight(bool highlighted) {
