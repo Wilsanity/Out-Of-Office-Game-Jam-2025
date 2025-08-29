@@ -94,7 +94,7 @@ public class UIManager : MonoBehaviour
 
         // Initialize UI
         bool gameManagerValid = gameManager != null;
-        UpdateGameState(gameManager != null ? gameManager.CurrentState : GameManager.GameState.MainMenu);
+        UpdateGameState(gameManager != null ? gameManager.CurrentState : GameManager.GameState.Playing);
         UpdateStoreScore(gameManager != null ? gameManager.StoreScore : 100f);
 
         pauseAction.action.started += context => OnPausePressed();
@@ -134,9 +134,6 @@ public class UIManager : MonoBehaviour
 
     private void SetupButtons()
     {
-        if (startGameButton != null)
-            startGameButton.onClick.AddListener(() => gameManager?.GoToLevelSelect());
-
         if (levelSelectContainer)
         {
             Button[] levelSelectButtons = levelSelectContainer.GetComponentsInChildren<Button>();
@@ -242,19 +239,6 @@ public class UIManager : MonoBehaviour
         // Show appropriate panels based on state
         switch (newState)
         {
-            case GameManager.GameState.MainMenu:
-                SetPanelActive(mainMenuPanel, true);
-                if (titleText != null)
-                    titleText.text = "Retail Rampage";
-                if (instructionsText != null)
-                    instructionsText.text = "Help the robot manage the store!\nComplete tasks to maintain your store rating.";
-                break;
-
-            case GameManager.GameState.LevelSelect:
-                SetPanelActive(mainMenuPanel, false);
-                SetPanelActive(levelSelectPanel, true);
-                break;
-
             case GameManager.GameState.Playing:
                 SetPanelActive(mainMenuPanel, false);
                 SetPanelActive(hudPanel, true);

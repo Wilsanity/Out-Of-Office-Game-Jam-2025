@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [Header("Game State")]
-    [SerializeField] private GameState currentState = GameState.MainMenu;
+    [SerializeField] private GameState currentState = GameState.Playing;
 
     [Header("Store Management")]
     [SerializeField] private float storeScore = 100f;
@@ -35,8 +35,6 @@ public class GameManager : MonoBehaviour
 
     public enum GameState
     {
-        MainMenu,
-        LevelSelect,
         Playing,
         Paused,
         LevelComplete,
@@ -51,16 +49,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        if (SceneManager.GetActiveScene().name == "MainMenu")
-        {
-            ChangeGameState(GameState.MainMenu);
-        }
-        else
-        {
-            StartGame();
-        }
+    private void Start() {
+        storeScore = maxStoreScore;
+        StartLevel();
     }
 
     private void Update()
@@ -90,17 +81,6 @@ public class GameManager : MonoBehaviour
         // Update timer
         timeRemaining -= Time.deltaTime;
         OnTimeChanged?.Invoke(timeRemaining);
-    }
-
-    public void GoToLevelSelect()
-    {
-        ChangeGameState(GameState.LevelSelect);
-    }
-
-    public void StartGame()
-    {
-        storeScore = maxStoreScore;
-        StartLevel();
     }
 
     public void StartLevel()
