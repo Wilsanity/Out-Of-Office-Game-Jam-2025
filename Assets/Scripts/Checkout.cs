@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Checkout : CommonInteractions, Interactable {
+public class Checkout : SpawnableTask, Interactable {
     [SerializeField] float itemDelay = 1f;
     [SerializeField] int itemCount = 5;
     [SerializeField] float damagePerSecond = 8f;

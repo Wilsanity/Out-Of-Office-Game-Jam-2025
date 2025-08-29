@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Spill : CommonInteractions, Interactable {
+public class Spill : SpawnableTask, Interactable {
 
     [SerializeField] float damagePerSecond = 4f;
     [SerializeField] float healthRefill = 10f;
