@@ -26,6 +26,7 @@ public class Checkout : MonoBehaviour, Interactable {
         } else {
             Debug.LogWarning("No spawn points found!");
             GameObject.Destroy(gameObject);
+            return;
         }
 
         gm = Object.FindAnyObjectByType<GameManager>();
