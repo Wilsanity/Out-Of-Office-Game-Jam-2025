@@ -4011,7 +4011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   currentState: 0
-  storeScore: 100
+  storeScore: 50
   maxStoreScore: 100
   gameOverThreshold: 0
   currentLevel: 3

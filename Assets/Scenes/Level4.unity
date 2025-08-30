@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
-  allowTantrum: 1
+  allowTantrum: 0
   allowCheckout: 0
   allowEscort: 0
   isFree: 1
@@ -570,14 +570,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   taskSlots:
   - taskPrefab: {fileID: 3219396273858219813, guid: 5899986df37f14c4cb677473038be133, type: 3}
-    spawnChance: 3
-    spawnDelay: 1.5
+    spawnChance: 2
+    spawnDelay: 2
   - taskPrefab: {fileID: 8362586950437641250, guid: 648b961854378b944a3ef5bd95b1c1b1, type: 3}
     spawnChance: 1
-    spawnDelay: 1
+    spawnDelay: 0.75
   - taskPrefab: {fileID: 43013644708747848, guid: 6c7e41b797354744c9f93be19ec3760a, type: 3}
     spawnChance: 1
-    spawnDelay: 2
+    spawnDelay: 3
 --- !u!4 &114072766
 Transform:
   m_ObjectHideFlags: 0
@@ -4558,7 +4558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
-  allowTantrum: 1
+  allowTantrum: 0
   allowCheckout: 0
   allowEscort: 0
   isFree: 1
@@ -9021,7 +9021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
-  allowTantrum: 1
+  allowTantrum: 0
   allowCheckout: 0
   allowEscort: 0
   isFree: 1
@@ -9361,13 +9361,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   currentState: 0
-  storeScore: 100
+  storeScore: 50
   maxStoreScore: 100
   gameOverThreshold: 0
   currentLevel: 4
   levelDuration: 120
   damageMultiplier: 1
-  healingMultiplier: 1
+  healingMultiplier: 2
   timeRemaining: 0
   taskSpawnInterval: 10
   maxConcurrentTasks: 3
@@ -9581,6 +9581,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2436610299647885452, guid: c39f19f3eb1b3214fa73d76bb71f17a4, type: 3}
+      propertyPath: moveSpeed
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2602481798154669323, guid: c39f19f3eb1b3214fa73d76bb71f17a4, type: 3}
       propertyPath: m_Name
       value: Player (1)
@@ -13957,7 +13961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
-  allowTantrum: 1
+  allowTantrum: 0
   allowCheckout: 0
   allowEscort: 0
   isFree: 1
@@ -14080,7 +14084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   allowSpill: 1
-  allowTantrum: 1
+  allowTantrum: 0
   allowCheckout: 0
   allowEscort: 0
   isFree: 1
