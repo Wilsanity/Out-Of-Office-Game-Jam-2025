@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     // Events for UI and other systems
     public Action<float> OnStoreScoreChanged;
-    public Action<float> OnTimeChanged;
+    public Action<float, float> OnTimeChanged;
     public Action<GameState> OnGameStateChanged;
     public Action<int> OnLevelComplete;
     public Action OnGameOver;
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
 
         // Update timer
         timeRemaining -= Time.deltaTime;
-        OnTimeChanged?.Invoke(timeRemaining);
+        OnTimeChanged?.Invoke(timeRemaining, levelDuration);
     }
 
     public void StartLevel()
