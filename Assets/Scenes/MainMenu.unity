@@ -4828,6 +4828,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5806291355491246772, guid: 545385b43e45f4b4685b4dc473c56bfa, type: 3}
+      propertyPath: m_fontStyle
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 5872948084547973485, guid: 545385b43e45f4b4685b4dc473c56bfa, type: 3}
       propertyPath: m_Pivot.x
       value: 0
