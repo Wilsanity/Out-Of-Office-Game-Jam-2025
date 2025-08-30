@@ -191,14 +191,14 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    private void UpdateTimer(float timeRemaining)
+    private void UpdateTimer(float timeRemaining, float timeTotal)
     {
         Color timerColor;
 
         // Change color when time is running out
-        if (timeRemaining < 30f)
+        if (timeRemaining < timeTotal / 4)
             timerColor = Color.red;
-        else if (timeRemaining < 60f)
+        else if (timeRemaining < timeTotal / 2)
             timerColor = Color.yellow;
         else
             timerColor = Color.white;
@@ -213,7 +213,7 @@ public class UIManager : MonoBehaviour
 
         if (timerSlider != null)
         {
-            timerSlider.value = timeRemaining / 120f; // Assuming 2 minutes per level
+            timerSlider.value = timeRemaining / timeTotal; // Assuming 2 minutes per level
 
             // Change color based on time remaining
             Image fillImage = timerSlider.fillRect?.GetComponent<Image>();
