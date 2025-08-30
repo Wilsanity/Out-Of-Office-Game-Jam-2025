@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public Action<float, float> OnTimeChanged;
     public Action<GameState> OnGameStateChanged;
     public Action<int> OnLevelComplete;
+    public Action<int> OnGameComplete;
     public Action OnGameOver;
 
     [SerializeField] private TaskManager taskManager;
@@ -38,7 +39,8 @@ public class GameManager : MonoBehaviour
         Playing,
         Paused,
         LevelComplete,
-        GameOver
+        GameOver,
+        GameComplete
     }
 
     private void Awake()
@@ -68,7 +70,14 @@ public class GameManager : MonoBehaviour
         // Check win condition
         if (timeRemaining <= 0)
         {
-            CompleteLevel();
+            if (currentLevel >= 4) // Game Complete!
+            {
+                CompleteGame();
+            }
+            else
+            {
+                CompleteLevel();
+            }
         }
 
         // Check lose condition
@@ -113,11 +122,36 @@ public class GameManager : MonoBehaviour
         StartCoroutine(NextLevelDelay());
     }
 
+    public void CompleteGame()
+    {
+        ChangeGameState(GameState.GameComplete);
+
+        if (taskManager != null)
+        {
+            taskManager.StopLevel();
+        }
+
+        OnGameComplete?.Invoke(currentLevel);
+        Debug.Log($"Level {currentLevel} complete!");
+
+        // Auto-advance to next level after delay
+        StartCoroutine(NextLevelDelay());
+
+    }
+
     private IEnumerator NextLevelDelay()
     {
         yield return new WaitForSeconds(3f);
         currentLevel++;
-        LoadLevel(currentLevel);
+
+        if (currentLevel > 4) // Game Complete!
+        {
+            ReturnToMainMenu();
+        }
+        else
+        {
+            LoadLevel(currentLevel);
+        }
     }
 
     public void LoadLevel(int level)

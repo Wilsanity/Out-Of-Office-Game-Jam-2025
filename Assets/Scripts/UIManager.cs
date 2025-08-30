@@ -89,6 +89,7 @@ public class UIManager : MonoBehaviour
             gameManager.OnTimeChanged += UpdateTimer;
             gameManager.OnGameStateChanged += UpdateGameState;
             gameManager.OnLevelComplete += ShowLevelComplete;
+            gameManager.OnGameComplete += ShowGameComplete;
             gameManager.OnGameOver += ShowGameOver;
         }
 
@@ -109,6 +110,7 @@ public class UIManager : MonoBehaviour
             gameManager.OnTimeChanged -= UpdateTimer;
             gameManager.OnGameStateChanged -= UpdateGameState;
             gameManager.OnLevelComplete -= ShowLevelComplete;
+            gameManager.OnGameComplete -= ShowGameComplete;
             gameManager.OnGameOver -= ShowGameOver;
         }
     }
@@ -254,6 +256,7 @@ public class UIManager : MonoBehaviour
                 break;
                 
             case GameManager.GameState.LevelComplete:
+            case GameManager.GameState.GameComplete:
                 SetPanelActive(hudPanel, true);
                 SetPanelActive(levelCompletePanel, true);
                 break;
@@ -275,7 +278,20 @@ public class UIManager : MonoBehaviour
         if (nextLevelText != null)
             nextLevelText.text = $"Preparing Level {level + 1}...";
     }
-    
+
+    private void ShowGameComplete(int level)
+    {
+        if (levelCompleteText != null)
+            levelCompleteText.text = $"Game Complete!";
+
+        if (levelScoreText != null && gameManager != null)
+            levelScoreText.text = $"Store Rating: {gameManager.StoreScore}";
+
+        if (nextLevelText != null)
+            nextLevelText.text = $"Returning to Main Menu...";
+    }
+
+
     private void ShowGameOver()
     {
         if (gameOverTitleText != null)
